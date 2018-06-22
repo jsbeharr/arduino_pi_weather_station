@@ -7,6 +7,14 @@
 *.userosscache
 *.sln.docstates
 
+# Excluding all Visual Studio files
+*.sln 
+*.vcxproj
+*.vcxproj.filters
+.vs
+__vm/
+
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
