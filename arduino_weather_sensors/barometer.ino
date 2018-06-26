@@ -19,9 +19,6 @@ void barometer_run() {
   float pascals = baro.getPressure();
   Serial.print(pascals / 3377); Serial.println(" Inches (Hg)");
 
-  float altm = baro.getAltitude();
-  Serial.print(altm); Serial.println(" meters");
-
   float tempF = (baro.getTemperature() * (9/5) ) + 32;
   Serial.print(tempF); Serial.println("*F");
 
