@@ -19,9 +19,13 @@ void setup()
 void loop() 
 {
   dht_humidity_temp_run();
+  Serial.print('\t');
   rain_run();
+  Serial.print('\t');
   wind_run();
+  Serial.print('\t');
   barometer_run();
+  Serial.print('\t');
   Serial.println();
   delay(2000);
 }
