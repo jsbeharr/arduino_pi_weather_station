@@ -10,7 +10,7 @@ const float VOLTAGE_MIN = .4; // Mininum output voltage from anemometer in mV.
 const float VOLTAGE_MAX = 2.0; // Maximum output voltage from anemometer in mV.
 const float WIND_SPEED_MAX = 32; // Wind speed in meters/sec corresponding to maximum voltage
 
-// A map function that returns a float vaue
+// A map function that returns a float value
 float map_float(float x, float in_min, float in_max, float out_min, float out_max) {
   return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
