@@ -22,7 +22,7 @@ void barometer_run() {
   float altm = baro.getAltitude();
   Serial.print(altm); Serial.println(" meters");
 
-  float tempC = baro.getTemperature();
-  Serial.print(tempC); Serial.println("*C");
+  float tempF = (baro.getTemperature() * (9/5) ) + 32;
+  Serial.print(tempF); Serial.println("*F");
 
 }
