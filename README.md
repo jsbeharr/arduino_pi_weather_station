@@ -10,4 +10,4 @@ Code for arduino is located in arduino_weather_sensors
 * DHT11 Temperature and Humidity Sensor Module https://www.adafruit.com/product/386
 
 ### Arduino Circuit Design
-![Arduino Circuit](https://gitlab.eecs.umich.edu/rubinz/arduino_pi_weather_station/raw/img-assets/img_assets/arduino_weather_sensors_v6_bb.png "arduino circuit image")
+![Arduino Circuit](https://gitlab.eecs.umich.edu/rubinz/arduino_pi_weather_station/raw/master/img_assets/arduino_weather_sensors_v6_bb.png "arduino circuit image")
