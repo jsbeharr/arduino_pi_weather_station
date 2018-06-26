@@ -13,7 +13,7 @@
 *.vcxproj.filters
 .vs
 __vm/
-
+*.pyproj
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
