@@ -29,10 +29,6 @@ void wind_run()
     wind_speed = (sensor_voltage - VOLTAGE_MIN) * WIND_SPEED_MAX / (VOLTAGE_MAX - VOLTAGE_MIN); //For voltages above minimum value, use the linear relationship to calculate wind speed.
   }
 
-  Serial.print("Voltage: ");
-  Serial.print(sensor_voltage);
-  Serial.print("\t");
-  Serial.print("Wind speed: ");
-  Serial.println(wind_speed);
+  Serial.print(wind_speed);
 
 }
