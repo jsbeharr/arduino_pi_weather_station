@@ -3,20 +3,14 @@ import time
 import logging
 import mysql.connector
 from mysql.connector import errorcode
+# imports database configuration from a db_config.py
+from db_config import database_config 
 
 # Sets up a logger
 logging.basicConfig(
         filename='sensor_test.log',
         level=logging.DEBUG,
         format='%(asctime)s:%(levelname)s:%(message)s')
-
-# database settings
-database_config = {
-        'user': 'root',
-        'password': 'test_pass',
-        'host': 'localhost',
-        'database': 'arduino_pi_weather_station_dev'
-        }
 
 # Inserts data into MySQL database
 def db_insert(config, sensor_data):
@@ -32,13 +26,13 @@ def db_insert(config, sensor_data):
         else:
             print(err)
     # Inserts the data
-    else:
-        cur = cnx.cursor()
+else:
+    cur = cnx.cursor()
         sensor_add = (
                 "INSERT INTO weather_data_test"
                 "(humidity,wetness,wind_speed,temperature,pressure)"
                 "VALUES (%(humidity)s,%(wetness)s,%(wind_speed)s,%(temperature)s,%(pressure)s)"
-        )
+                )
         cur.execute(sensor_add,sensor_data)
         cnx.commit()
     # Closes the connection
@@ -51,23 +45,23 @@ def db_insert(config, sensor_data):
 def main():
     # Specifies which serial port to listen on
     arduino = serial.Serial('/dev/ttyACM0', 9600)
-    
+
     # Reads in data from arduino
     data = arduino.readline()
     time.sleep(1)
     data = arduino.readline()
-    
+
     # Get each piece seperate by a tab
     pieces = data.split('\t')
-    
+
     # sets a variable to each sensor reading
     sensor = {
-        'humidity':     pieces[0],
-        'wetness':      pieces[1], 
-        'wind_speed':   pieces[2],
-        'pressure':     pieces[3],
-        'temperature':  pieces[4],
-    }
+            'humidity':     pieces[0],
+            'wetness':      pieces[1], 
+            'wind_speed':   pieces[2],
+            'pressure':     pieces[3],
+            'temperature':  pieces[4],
+            }
 
     logging.debug('Humidity: {}'    .format(sensor['humidity']))
     logging.debug('Wetness: {}'     .format(sensor['wetness'])) 
