@@ -34,16 +34,15 @@ humidity    = pieces[0]
 wetness     = pieces[1] 
 wind_speed  = pieces[2]
 pressure    = pieces[3]
-temperture  = pieces[4]
+temperature = pieces[4]
 
 # Logs sensor readings to sensor_test.log
 logging.debug('Humidity: {}'    .format(humidity))
 logging.debug('Wetness: {}'     .format(wetness)) 
 logging.debug('Wind Speed: {} ' .format(wind_speed))
 logging.debug('Pressure: {}'    .format(pressure)) 
-logging.debug('Temperature: {}' .format(temperture))
+logging.debug('Temperature: {}' .format(temperature))
 
-cnx = cur = None
 try:
     cnx = mysql.connector.connect(**config)
 except mysql.connector.Error as err:
@@ -55,9 +54,16 @@ except mysql.connector.Error as err:
         print(err)
 else:
     cur = cnx.cursor()
-    cur.execute('show databases;')
-    for row in cur.fetchall():
-        print(row)
+    sensor_data = {
+            'humidity': humidity,
+            'wetness': wetness,
+            'wind_speed': wind_speed,
+            'temperature': temperature,
+            'pressure': pressure
+            }
+    sensor_add = """INSERT INTO weather_data_test (humidity,wetness,wind_speed,temperature,pressure) VALUES (%(humidity)s,%(wetness)s,%(wind_speed)s,%(temperature)s,%(pressure)s)"""
+    cur.execute(sensor_add,sensor_data)
+    cnx.commit()
 finally:
     if cur:
         cur.close()
