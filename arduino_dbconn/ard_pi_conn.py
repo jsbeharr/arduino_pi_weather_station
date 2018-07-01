@@ -38,7 +38,7 @@ def db_insert(config, sensor_data):
                 "INSERT INTO weather_data_test"
                 "(humidity,wetness,wind_speed,temperature,pressure)"
                 "VALUES (%(humidity)s,%(wetness)s,%(wind_speed)s,%(temperature)s,%(pressure)s)"
-                )
+        )
         cur.execute(sensor_add,sensor_data)
         cnx.commit()
     # Closes the connection
@@ -65,8 +65,8 @@ def main():
         'humidity':     pieces[0],
         'wetness':      pieces[1], 
         'wind_speed':   pieces[2],
-        'temperature':  pieces[3],
-        'pressure':     pieces[4],
+        'pressure':     pieces[3],
+        'temperature':  pieces[4],
     }
 
     logging.debug('Humidity: {}'    .format(sensor['humidity']))
