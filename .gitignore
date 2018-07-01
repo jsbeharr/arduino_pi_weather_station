@@ -6,6 +6,7 @@
 *.user
 *.userosscache
 *.sln.docstates
+db_config.py
 
 # Excluding all Visual Studio files
 *.sln 
