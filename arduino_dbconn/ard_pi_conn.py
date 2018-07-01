@@ -10,14 +10,6 @@ logging.basicConfig(
         level=logging.DEBUG,
         format='%(asctime)s:%(levelname)s:%(message)s')
 
-# database config
-config = {
-        'user': 'root',
-        'password': 'test_pass',
-        'host': 'localhost',
-        'database': 'arduino_pi_weather_station_dev'
-        }
-
 # Specifies which serial port to listen on
 arduino = serial.Serial('/dev/ttyACM0', 9600)
 
@@ -37,35 +29,56 @@ pressure    = pieces[3]
 temperature = pieces[4]
 
 # Logs sensor readings to sensor_test.log
-logging.debug('Humidity: {}'    .format(humidity))
-logging.debug('Wetness: {}'     .format(wetness)) 
-logging.debug('Wind Speed: {} ' .format(wind_speed))
-logging.debug('Pressure: {}'    .format(pressure)) 
-logging.debug('Temperature: {}' .format(temperature))
+def log():
+    logging.debug('Humidity: {}'    .format(humidity))
+    logging.debug('Wetness: {}'     .format(wetness)) 
+    logging.debug('Wind Speed: {} ' .format(wind_speed))
+    logging.debug('Pressure: {}'    .format(pressure)) 
+    logging.debug('Temperature: {}' .format(temperature))
 
-try:
-    cnx = mysql.connector.connect(**config)
-except mysql.connector.Error as err:
-    if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-        print('Something is wrong with your user name or password')
-    elif err.errno == errorcode.ER_BAD_DB_ERROR:
-        print("Database does not exist")
+# Inserts data into MySQL database
+def db_insert(config):
+    try:
+        cnx = mysql.connector.connect(**config)
+    # Catches any errors
+    except mysql.connector.Error as err:
+        if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+            print('Something is wrong with your user name or password')
+        elif err.errno == errorcode.ER_BAD_DB_ERROR:
+            print("Database does not exist")
+        else:
+            print(err)
+    # Inserts the data
     else:
-        print(err)
-else:
-    cur = cnx.cursor()
-    sensor_data = {
-            'humidity': humidity,
-            'wetness': wetness,
-            'wind_speed': wind_speed,
-            'temperature': temperature,
-            'pressure': pressure
-            }
-    sensor_add = """INSERT INTO weather_data_test (humidity,wetness,wind_speed,temperature,pressure) VALUES (%(humidity)s,%(wetness)s,%(wind_speed)s,%(temperature)s,%(pressure)s)"""
-    cur.execute(sensor_add,sensor_data)
-    cnx.commit()
-finally:
-    if cur:
-        cur.close()
-    if cnx:
-        cnx.close()
+        cur = cnx.cursor()
+        sensor_data = {
+                'humidity': humidity,
+                'wetness': wetness,
+                'wind_speed': wind_speed,
+                'temperature': temperature,
+                'pressure': pressure
+                }
+        sensor_add = (
+                "INSERT INTO weather_data_test"
+                "(humidity,wetness,wind_speed,temperature,pressure)"
+                "VALUES (%(humidity)s,%(wetness)s,%(wind_speed)s,%(temperature)s,%(pressure)s)"
+                )
+        cur.execute(sensor_add,sensor_data)
+        cnx.commit()
+    # Closes the connection
+    finally:
+        if cur:
+            cur.close()
+        if cnx:
+            cnx.close()
+
+if __name__ == '__main__':
+    # uncomment for logging
+    # log()
+    database_config = {
+        'user': 'root',
+        'password': 'test_pass',
+        'host': 'localhost',
+        'database': 'arduino_pi_weather_station_dev'
+        }
+    db_insert(database_config)
