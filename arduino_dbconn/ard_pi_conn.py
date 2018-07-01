@@ -10,34 +10,17 @@ logging.basicConfig(
         level=logging.DEBUG,
         format='%(asctime)s:%(levelname)s:%(message)s')
 
-# Specifies which serial port to listen on
-arduino = serial.Serial('/dev/ttyACM0', 9600)
-
-# Reads in data from arduino
-data = arduino.readline()
-time.sleep(1)
-data = arduino.readline()
-
-# Get each piece seperate by a tab
-pieces = data.split('\t')
-
-# sets a variable to each sensor reading
-humidity    = pieces[0]
-wetness     = pieces[1] 
-wind_speed  = pieces[2]
-pressure    = pieces[3]
-temperature = pieces[4]
-
-# Logs sensor readings to sensor_test.log
-def log():
-    logging.debug('Humidity: {}'    .format(humidity))
-    logging.debug('Wetness: {}'     .format(wetness)) 
-    logging.debug('Wind Speed: {} ' .format(wind_speed))
-    logging.debug('Pressure: {}'    .format(pressure)) 
-    logging.debug('Temperature: {}' .format(temperature))
+# database settings
+database_config = {
+        'user': 'root',
+        'password': 'test_pass',
+        'host': 'localhost',
+        'database': 'arduino_pi_weather_station_dev'
+        }
 
 # Inserts data into MySQL database
-def db_insert(config):
+def db_insert(config, sensor_data):
+    # connects to database using the config
     try:
         cnx = mysql.connector.connect(**config)
     # Catches any errors
@@ -51,13 +34,6 @@ def db_insert(config):
     # Inserts the data
     else:
         cur = cnx.cursor()
-        sensor_data = {
-                'humidity': humidity,
-                'wetness': wetness,
-                'wind_speed': wind_speed,
-                'temperature': temperature,
-                'pressure': pressure
-                }
         sensor_add = (
                 "INSERT INTO weather_data_test"
                 "(humidity,wetness,wind_speed,temperature,pressure)"
@@ -72,13 +48,34 @@ def db_insert(config):
         if cnx:
             cnx.close()
 
+def main():
+    # Specifies which serial port to listen on
+    arduino = serial.Serial('/dev/ttyACM0', 9600)
+    
+    # Reads in data from arduino
+    data = arduino.readline()
+    time.sleep(1)
+    data = arduino.readline()
+    
+    # Get each piece seperate by a tab
+    pieces = data.split('\t')
+    
+    # sets a variable to each sensor reading
+    sensor = {
+        'humidity':     pieces[0],
+        'wetness':      pieces[1], 
+        'wind_speed':   pieces[2],
+        'temperature':  pieces[3],
+        'pressure':     pieces[4],
+    }
+
+    logging.debug('Humidity: {}'    .format(sensor['humidity']))
+    logging.debug('Wetness: {}'     .format(sensor['wetness'])) 
+    logging.debug('Wind Speed: {} ' .format(sensor['wind_speed']))
+    logging.debug('Pressure: {}'    .format(sensor['pressure'])) 
+    logging.debug('Temperature: {}' .format(sensor['temperature']))
+
+    db_insert(database_config, sensor)
+
 if __name__ == '__main__':
-    # uncomment for logging
-    # log()
-    database_config = {
-        'user': 'root',
-        'password': 'test_pass',
-        'host': 'localhost',
-        'database': 'arduino_pi_weather_station_dev'
-        }
-    db_insert(database_config)
+    main()
