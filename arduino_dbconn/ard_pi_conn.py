@@ -26,7 +26,7 @@ def db_insert(config, sensor_data):
         else:
             print(err)
     # Inserts the data
-else:
+    else:
     cur = cnx.cursor()
         sensor_add = (
                 "INSERT INTO weather_data_test"
