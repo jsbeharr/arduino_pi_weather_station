@@ -1,3 +1,16 @@
+"""
+
+Inserts Arduino sensor data coming over serial into the
+database and logs the reading to a file.
+
+Database configuration settings are located in a seperate
+called db_config
+
+Follow this link to know the exact database
+connector in this program
+https://github.com/sanpingz/mysql-connector
+
+"""
 import serial
 import time
 import logging
