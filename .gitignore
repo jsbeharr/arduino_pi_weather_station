@@ -7,6 +7,7 @@
 *.userosscache
 *.sln.docstates
 db_config.py
+config.cfg
 
 # Excluding all Visual Studio files
 *.sln 
