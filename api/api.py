@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 from flask_restful import Api, Resource
 from flaskext.mysql import MySQL
 
@@ -41,9 +41,14 @@ class Weather_Request(Resource):
             return {'error' : str(e) }
 
 
-# Gets all weather forecasts
-class All(Weather_Request):
+# Can get and query weather
+class Weather(Weather_Request):
     def get(self):
+        # url arguments do "/weather?<arg1>=<val1>&<arg2>=<val2>&..."
+        # or just do "/weather" to get all data
+        date_begin = request.args.get('begin', default='2018-06-27', type=str)
+        date_end = request.args.get('end', default='2018-07-10', type=str)
+
         query = """
             SELECT 
                 `date_time`,
@@ -53,8 +58,15 @@ class All(Weather_Request):
                 `temperature`,
                 `pressure` 
             FROM 
-                `weather_data_test`"""
+                `weather_data_test`
+            WHERE
+                `date_time` BETWEEN
+                    \'{begin}\'
+                    and
+                    \'{end}\'
+                """.format(begin=date_begin, end=date_end)
         return super().get(query)
+
 
 # Gets the most recent forecast entry
 class Recent(Weather_Request):
@@ -74,9 +86,10 @@ class Recent(Weather_Request):
             DESC LIMIT 1""" 
         return super().get(query)
 
+
 # Creates routes
-api.add_resource(All, '/all')
-api.add_resource(Recent, '/recent')
+api.add_resource(Weather, '/weather')
+api.add_resource(Recent, '/weather/recent')
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
