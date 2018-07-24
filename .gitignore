@@ -8,6 +8,7 @@
 *.sln.docstates
 db_config.py
 config.cfg
+.venv
 
 # Excluding all Visual Studio files
 *.sln 
