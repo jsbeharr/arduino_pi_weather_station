@@ -1,0 +1,22 @@
+*Pick And Place List
+*Company=
+*Author=
+*eMail=
+*
+*Project=arduino_weather_sensors_v12
+*Date=11:39:27
+*CreatedBy=Fritzing 0.9.3b.04.19.5c895d327c44a3114e5fcc9d8260daf0cbb52806
+*
+*
+*Coordinates in mm, always center of component
+*Origin 0/0=Lower left corner of PCB
+*Rotation in degree (0-360, math. pos.)
+*
+*No;Value;Package;X;Y;Rotation;Side;Name
+1;;;66.0533;-93.9826;0;Bottom;MPL3115A2
+2;;;76.2133;-75.9797;90;Bottom;Arduino Uno
+3;;SIP (Single Inline) [THT];60.9733;-58.4226;0;Bottom;Raindrop Sensor
+4;220;THT;55.8933;-80.0126;-90;Bottom;R1
+5;;SIP (Single Inline) [THT];83.8333;-87.6326;0;Bottom;Anemometer
+6;220;THT;60.9733;-74.9326;-90;Bottom;R4
+7;;;80.0439;-60.9626;-90;Bottom;DHT11
