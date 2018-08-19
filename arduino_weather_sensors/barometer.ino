@@ -10,7 +10,6 @@
 Adafruit_MPL3115A2 baro = Adafruit_MPL3115A2();
 
 void barometer_run() {
-
   if (! baro.begin()) {
     Serial.println("Couldnt find sensor");
     return;
@@ -23,5 +22,4 @@ void barometer_run() {
 
   float tempF = (baro.getTemperature() * 1.8 ) + 32;
   Serial.print(tempF);
-
 }
