@@ -21,7 +21,7 @@ void barometer_run() {
   
   Serial.print('\t');
 
-  float tempF = (baro.getTemperature() * (9/5) ) + 32;
+  float tempF = (baro.getTemperature() * 1.8 ) + 32;
   Serial.print(tempF);
 
 }
