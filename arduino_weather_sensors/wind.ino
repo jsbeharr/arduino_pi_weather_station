@@ -15,8 +15,7 @@ float map_float(float x, float in_min, float in_max, float out_min, float out_ma
   return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
 
-void wind_run()
-{
+void wind_run() {
   // Get a value between 0 and 1023 from the analog pin connected to the anemometer
   sensor_value = analogRead(WINDPIN);
   // Maps anemometer voltages between 0 and 5 depending on sensor value
@@ -30,5 +29,4 @@ void wind_run()
   }
 
   Serial.print(wind_speed);
-
 }

@@ -8,8 +8,7 @@
 #define RAINPIN A0
 #define WINDPIN A1      
 
-void setup() 
-{
+void setup() {
   Serial.begin(9600);
   dht_humidity_temp_setup();
 }
@@ -21,8 +20,7 @@ void setup()
   "humidity(%)  wetness(sensor reading)  wind_speed(m/s)  pressure(Inches(Hg))  temperture(F)  
 */
 
-void loop() 
-{
+void loop() {
   dht_humidity_temp_run();
   Serial.print('\t');
   rain_run();

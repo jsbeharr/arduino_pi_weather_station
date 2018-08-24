@@ -13,8 +13,7 @@
 // enable DHT11 sensor from the set pin
 DHT_Unified dht(DHTPIN, DHTTYPE);
 
-void dht_humidity_temp_setup()
-{
+void dht_humidity_temp_setup() {
   // Initialize device.
   dht.begin();
 }
