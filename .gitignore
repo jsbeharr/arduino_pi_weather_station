@@ -273,3 +273,6 @@ __pycache__/
 
 # Swap files
 *.swp
+
+# VS Code files
+.vscode/
