@@ -19,4 +19,4 @@ pytz==2018.5
 PyYAML==3.13
 serial==0.0.67
 six==1.11.0
-Werkzeug==0.14.1
+Werkzeug==0.15.3
