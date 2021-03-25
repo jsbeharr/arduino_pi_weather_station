@@ -16,7 +16,7 @@ mysql-connector==2.1.6
 pycparser==2.18
 PyMySQL==0.9.2
 pytz==2018.5
-PyYAML==5.1
+PyYAML==5.4
 serial==0.0.67
 six==1.11.0
 Werkzeug==0.15.3
